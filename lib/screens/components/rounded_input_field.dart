@@ -4,12 +4,14 @@ import 'package:it_support/screens/components/text_field_container.dart';
 class RoundedInputField extends StatelessWidget {
   final String hintText;
   final IconData icon;
+  final TextEditingController controller;
   final ValueChanged<String> onChanged;
   const RoundedInputField({
     Key? key,
     required this.hintText,
     this.icon = Icons.construction_sharp,
     required this.onChanged,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -17,6 +19,7 @@ class RoundedInputField extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return TextFieldContainer(
       child: TextField(
+        controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
             icon: Icon(icon, color: Colors.blue),

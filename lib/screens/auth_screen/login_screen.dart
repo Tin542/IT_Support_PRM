@@ -8,9 +8,10 @@ import 'package:it_support/screens/auth_screen/forgot_password_screen.dart';
 import 'package:it_support/screens/auth_screen/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-
-  final TextEditingController emailTextEditingController = TextEditingController();
-  final TextEditingController passwordTextEditingController = TextEditingController();
+  final TextEditingController emailTextEditingController =
+      TextEditingController();
+  final TextEditingController passwordTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +90,11 @@ class LoginScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     onPressed: () {
-                      if (!emailTextEditingController.text.contains("@")){
+                      if (!emailTextEditingController.text.contains("@")) {
                         displayToastMessage("Email không hợp lệ", context);
-                      } else if (passwordTextEditingController.text.isEmpty){
-                        displayToastMessage("Mật khẩu không thể để trống", context);
+                      } else if (passwordTextEditingController.text.isEmpty) {
+                        displayToastMessage(
+                            "Mật khẩu không thể để trống", context);
                       } else {
                         loginUser(context);
                       }
@@ -143,34 +145,38 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // authen vao firebase
+  final FirebaseAuth _firebaseAuth =
+      FirebaseAuth.instance; // authen vao firebase
 
-  void loginUser(BuildContext context) async{
+  void loginUser(BuildContext context) async {
     final User? firebaseUser = (await _firebaseAuth
-        .signInWithEmailAndPassword(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text)
-        .catchError((errMsg){
+            .signInWithEmailAndPassword(
+                email: emailTextEditingController.text,
+                password: passwordTextEditingController.text)
+            .catchError((errMsg) {
       displayToastMessage("Error: " + errMsg.toString(), context);
-    })).user;
+    }))
+        .user;
 
-    if(firebaseUser != null){
-      usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap){
-        if(snap.value != null){
+    if (firebaseUser != null) {
+      usersRef.child(firebaseUser.uid).once().then((DataSnapshot snap) {
+        if (snap.value != null) {
           displayToastMessage("Đăng nhập thành công", context);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavScreen()));
-        } else{
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => BottomNavScreen()));
+        } else {
           _firebaseAuth.signOut();
-          displayToastMessage("Tài khoản của bạn không có, hãy tạo tài khoản", context);
+          displayToastMessage(
+              "Tài khoản của bạn không có, hãy tạo tài khoản", context);
         }
       });
-    } else{
+    } else {
       displayToastMessage("Đang có lỗi gì đó.", context);
     }
   }
 
-  displayToastMessage(String message, BuildContext context){
-    Fluttertoast.showToast(msg:message);
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
   }
 
   Widget backtoRegister(BuildContext context) {

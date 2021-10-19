@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:it_support/main.dart';
-import 'package:it_support/screens/login_screen.dart';
+import 'package:it_support/firebase_database/database.dart';
+import 'package:it_support/screens/auth_screen/login_screen.dart';
 
 
 class RegisterScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
-import 'package:it_support/screens/profile_screen.dart';
+import 'package:it_support/screens/profile_screen/profile_screen.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);

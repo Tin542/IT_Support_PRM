@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
-import 'package:it_support/screens/edit_profile_screen.dart';
-import 'package:it_support/screens/login_screen.dart';
+import 'package:it_support/screens/auth_screen/login_screen.dart';
+import 'package:it_support/screens/profile_screen/edit_profile_screen.dart';
 
 
 class ProfileScreen extends StatefulWidget {

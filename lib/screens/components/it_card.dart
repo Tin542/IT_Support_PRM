@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_support/constant.dart';
-import 'package:it_support/screens/it_support_detail_screen.dart';
+import 'package:it_support/screens/request_screen/it_support_detail_screen.dart';
 
 class ITCard extends StatelessWidget {
   var _name;

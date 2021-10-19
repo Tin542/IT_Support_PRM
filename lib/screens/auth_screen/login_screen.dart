@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:it_support/main.dart';
+import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/bottom_nav_bar_screen.dart';
-import 'package:it_support/screens/forgot_password_screen.dart';
-import 'package:it_support/screens/register_screen.dart';
+import 'package:it_support/screens/auth_screen/forgot_password_screen.dart';
+import 'package:it_support/screens/auth_screen/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
 

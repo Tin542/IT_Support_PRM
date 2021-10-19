@@ -1,6 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:it_support/main.dart';
+import 'package:it_support/screens/login_screen.dart';
+
 
 class RegisterScreen extends StatelessWidget {
+  TextEditingController nameTextEditingController = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,16 +22,6 @@ class RegisterScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              //   child: Container(
-              //       width: 380,
-              //       height: 300,
-              //       // padding: EdgeInsets.all(15),
-              //       // decoration: BoxDecoration(
-              //       //     shape: BoxShape.circle, color: Colors.blue),
-              //       child: Image.asset('assets/images/logo.jpg')),
-              // ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 80, 0, 40),
                 child: Text(
@@ -36,6 +35,7 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: TextField(
+                  controller: nameTextEditingController,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
                       labelText: "TÊN ĐĂNG NHẬP",
@@ -46,6 +46,7 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: TextField(
+                  controller: emailTextEditingController,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
                       labelText: "EMAIL",
@@ -56,6 +57,7 @@ class RegisterScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: TextField(
+                  controller: passwordTextEditingController,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   obscureText: true,
                   decoration: InputDecoration(
@@ -63,22 +65,6 @@ class RegisterScreen extends StatelessWidget {
                       labelStyle:
                           TextStyle(color: Color(0xff888888), fontSize: 15)),
                 ),
-              ),
-              Stack(
-                alignment: AlignmentDirectional.centerEnd,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                    child: TextField(
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          labelText: "XÁC NHẬN MẬT KHẨU",
-                          labelStyle: TextStyle(
-                              color: Color(0xff888888), fontSize: 15)),
-                    ),
-                  ),
-                ],
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
@@ -89,7 +75,17 @@ class RegisterScreen extends StatelessWidget {
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
-                    onPressed: onSignInClicked,
+                    onPressed: (){
+                      if(nameTextEditingController.text.length < 4){
+                        displayToastMessage("Tên ít nhất 3 kí tự", context);
+                      } else if (!emailTextEditingController.text.contains("@")){
+                        displayToastMessage("Email không hợp lệ", context);
+                      } else if (passwordTextEditingController.text.length < 7){
+                        displayToastMessage("Password ít nhất 8 kí tự", context);
+                      } else {
+                        registerNewUser(context);
+                      }
+                    },
                     child: Text(
                       "ĐĂNG KÝ",
                       style: TextStyle(color: Colors.white, fontSize: 16),
@@ -104,5 +100,32 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  void onSignInClicked() {}
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // authen vao firebase
+
+  void registerNewUser(BuildContext context) async {
+    final User? firebaseUser = (await _firebaseAuth
+        .createUserWithEmailAndPassword(
+        email: emailTextEditingController.text,
+        password: passwordTextEditingController.text).catchError((errMsg){
+          displayToastMessage("Error: " + errMsg.toString(), context);
+    })).user;
+
+    if(firebaseUser != null){
+      //luu thong tin user len database
+      Map userDataMap ={
+        "name": nameTextEditingController.text.trim(),
+        "email": emailTextEditingController.text.trim(),
+      };
+
+      usersRef.child(firebaseUser.uid).set(userDataMap);
+      displayToastMessage("Tài khoản của bạn đã được tạo", context);
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    } else{
+      displayToastMessage("Người dùng mới không được tạo", context);
+    }
+  }
+  displayToastMessage(String message, BuildContext context){
+    Fluttertoast.showToast(msg:message);
+  }
 }

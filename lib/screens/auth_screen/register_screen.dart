@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
@@ -8,6 +9,8 @@ import 'package:it_support/screens/auth_screen/login_screen.dart';
 class RegisterScreen extends StatelessWidget {
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController phoneTextEditingController = TextEditingController();
+  TextEditingController genderTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
@@ -38,9 +41,31 @@ class RegisterScreen extends StatelessWidget {
                   controller: nameTextEditingController,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
-                      labelText: "TÊN ĐĂNG NHẬP",
+                      labelText: "HỌ VÀ TÊN",
                       labelStyle:
                           TextStyle(color: Color(0xff888888), fontSize: 15)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                child: TextField(
+                  controller: genderTextEditingController,
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  decoration: InputDecoration(
+                      labelText: "GIỚI TÍNH",
+                      labelStyle:
+                      TextStyle(color: Color(0xff888888), fontSize: 15)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                child: TextField(
+                  controller: phoneTextEditingController,
+                  style: TextStyle(fontSize: 18, color: Colors.black),
+                  decoration: InputDecoration(
+                      labelText: "SỐ ĐIỆN THOẠI",
+                      labelStyle:
+                      TextStyle(color: Color(0xff888888), fontSize: 15)),
                 ),
               ),
               Padding(
@@ -76,8 +101,8 @@ class RegisterScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     onPressed: (){
-                      if(nameTextEditingController.text.length < 4){
-                        displayToastMessage("Tên ít nhất 3 kí tự", context);
+                      if(nameTextEditingController.text.length < 1){
+                        displayToastMessage("Tên ít nhất 2 kí tự", context);
                       } else if (!emailTextEditingController.text.contains("@")){
                         displayToastMessage("Email không hợp lệ", context);
                       } else if (passwordTextEditingController.text.length < 7){
@@ -100,8 +125,8 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // authen vao firebase
-
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;// authen vao firebase
+  // final dailySpecialRef = database.reference.child("");
   void registerNewUser(BuildContext context) async {
     final User? firebaseUser = (await _firebaseAuth
         .createUserWithEmailAndPassword(
@@ -115,6 +140,8 @@ class RegisterScreen extends StatelessWidget {
       Map userDataMap ={
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
+        "phone": phoneTextEditingController.text.trim(),
+        "gender": genderTextEditingController.text.trim(),
       };
 
       usersRef.child(firebaseUser.uid).set(userDataMap);

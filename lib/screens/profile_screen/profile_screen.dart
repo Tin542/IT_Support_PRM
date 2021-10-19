@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
@@ -196,9 +198,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textfield(
                           hintText: 'Đăng Xuất',
                           icon: Icons.logout,
-                          onTap: () => {
-                            Get.offAll(() => LoginScreen(),
-                                duration: Duration(microseconds: 600))
+                          onTap: () {
+                            logoutUser(context);
                           },
                         ),
                       ],
@@ -212,4 +213,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  void logoutUser(BuildContext context) async{
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    _firebaseAuth.signOut();
+    displayToastMessage("Ban da dang xuat", context);
+  }
+
+  displayToastMessage(String message, BuildContext context){
+    Fluttertoast.showToast(msg:message);
+  }
+
 }

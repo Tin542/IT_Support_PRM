@@ -1,10 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:it_support/main.dart';
 import 'package:it_support/screens/bottom_nav_bar_screen.dart';
 import 'package:it_support/screens/forgot_password_screen.dart';
-import 'package:it_support/screens/home_screen.dart';
 import 'package:it_support/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+
+  final TextEditingController emailTextEditingController = TextEditingController();
+  final TextEditingController passwordTextEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +47,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 28),
                 child: TextField(
+                  controller: emailTextEditingController,
                   style: TextStyle(fontSize: 18, color: Colors.black),
                   decoration: InputDecoration(
                       labelText: "TÊN ĐĂNG NHẬP",
@@ -53,10 +61,11 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                     child: TextField(
+                      controller: passwordTextEditingController,
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       obscureText: true,
                       decoration: InputDecoration(
-                          labelText: "MẬT KHẨU",
+                          labelText: "Mật Khẩu",
                           labelStyle: TextStyle(
                               color: Color(0xff888888), fontSize: 15)),
                     ),
@@ -79,20 +88,18 @@ class LoginScreen extends StatelessWidget {
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
-                    onPressed: onSignInClicked,
-                    // child: Text(
-                    //   "SIGN IN",
-                    //   style: TextStyle(color: Colors.white, fontSize: 16),
-                    // ),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: backtoCustomerScreen));
-                      },
-                      child: Text(
-                        "ĐĂNG NHẬP",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
+                    onPressed: () {
+                      if (!emailTextEditingController.text.contains("@")){
+                        displayToastMessage("Email không hợp lệ", context);
+                      } else if (passwordTextEditingController.text.isEmpty){
+                        displayToastMessage("Mật khẩu không thể để trống", context);
+                      } else {
+                        loginUser(context);
+                      }
+                    },
+                    child: Text(
+                      "ĐĂNG NHẬP",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),
@@ -136,6 +143,36 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance; // authen vao firebase
+
+  void loginUser(BuildContext context) async{
+    final User? firebaseUser = (await _firebaseAuth
+        .signInWithEmailAndPassword(
+        email: emailTextEditingController.text,
+        password: passwordTextEditingController.text)
+        .catchError((errMsg){
+      displayToastMessage("Error: " + errMsg.toString(), context);
+    })).user;
+
+    if(firebaseUser != null){
+      usersRef.child(firebaseUser.uid).once().then((value) => (DataSnapshot snap){
+        if(snap.value != null){
+          displayToastMessage("Đăng nhập thành công", context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavScreen()));
+        } else{
+          _firebaseAuth.signOut();
+          displayToastMessage("Tài khoản của bạn không có, hãy tạo tài khoản", context);
+        }
+      });
+    } else{
+      displayToastMessage("Đang có lỗi gì đó.", context);
+    }
+  }
+
+  displayToastMessage(String message, BuildContext context){
+    Fluttertoast.showToast(msg:message);
+  }
+
   Widget backtoRegister(BuildContext context) {
     return RegisterScreen();
   }
@@ -143,10 +180,4 @@ class LoginScreen extends StatelessWidget {
   Widget backtoForgotPasswordScreen(BuildContext context) {
     return ForgotPasswordScreen();
   }
-
-  Widget backtoCustomerScreen(BuildContext context) {
-    return BottomNavScreen();
-  }
-
-  void onSignInClicked() {}
 }

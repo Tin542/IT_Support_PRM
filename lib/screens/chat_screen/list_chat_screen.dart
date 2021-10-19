@@ -34,7 +34,7 @@ class ListChatScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => ChatScreen(
-                  user: chat.sender,
+                  users: chat.sender,
                 ),
               ),
             ),

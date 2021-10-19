@@ -3,9 +3,9 @@ import 'package:it_support/models/message_model.dart';
 import 'package:it_support/models/user_model.dart';
 
 class ChatScreen extends StatefulWidget {
-  final User user;
+  final Users users;
 
-  ChatScreen({required this.user});
+  ChatScreen({required this.users});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -194,13 +194,13 @@ class _ChatScreenState extends State<ChatScreen> {
           text: TextSpan(
             children: [
               TextSpan(
-                  text: widget.user.name,
+                  text: widget.users.name,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                   )),
               TextSpan(text: '\n'),
-              widget.user.isOnline ?
+              widget.users.isOnline ?
               TextSpan(
                 text: 'Online',
                 style: TextStyle(

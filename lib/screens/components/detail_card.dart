@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_support/constant.dart';
-import 'package:it_support/screens/detail_request_screen.dart';
+import 'package:it_support/screens/request_screen/detail_request_screen.dart';
 
 class DetailCard extends StatelessWidget {
   var _name;

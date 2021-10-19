@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:it_support/screens/components/body.dart';
-import 'package:it_support/screens/components/dropdown_button.dart';
-import 'package:it_support/screens/components/dropdown_button_type.dart';
-import 'package:it_support/screens/components/rounded_input_field.dart';
-import 'package:it_support/screens/it_support_list_screen.dart';
+
 
 import 'dart:ui';
 

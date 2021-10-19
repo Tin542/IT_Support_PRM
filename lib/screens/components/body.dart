@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:it_support/screens/components/backgound.dart';
 import 'package:it_support/screens/components/dropdown_button.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
-import 'package:it_support/screens/it_support_list_screen.dart';
+import 'package:it_support/screens/request_screen/it_support_list_screen.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);

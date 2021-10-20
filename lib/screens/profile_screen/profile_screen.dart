@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
 import 'package:it_support/screens/profile_screen/edit_profile_screen.dart';
-
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -15,6 +13,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
+  }
+
   Widget textfield({@required hintText, @required icon, onTap}) {
     return Material(
       elevation: 4,
@@ -66,8 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: BoxShape.circle,
                           color: kBackgroundColor,
                           image: DecorationImage(
-                            image:
-                            AssetImage('assets/images/Yeti.png'),
+                            image: AssetImage('assets/images/Yeti.png'),
                           ),
                         ),
                       ),
@@ -117,8 +118,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Padding(
                                 padding:
-                                const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: Icon(Icons.person, color: kWhiteColor,),
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: Icon(
+                                  Icons.person,
+                                  color: kWhiteColor,
+                                ),
                               ),
                               Text(
                                 "Tài khoản",
@@ -135,11 +139,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onPressed: () => {
                                   Get.to(() => EditProfile(),
                                       transition:
-                                      Transition.rightToLeftWithFade,
+                                          Transition.rightToLeftWithFade,
                                       duration: Duration(milliseconds: 600))
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(100, 0, 0, 0),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(100, 0, 0, 0),
                                   child: Icon(
                                     Icons.edit,
                                     color: kWhiteColor,
@@ -173,8 +178,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Padding(
                                 padding:
-                                const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                child: Icon(Icons.contact_support, color: kWhiteColor,),
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                child: Icon(
+                                  Icons.contact_support,
+                                  color: kWhiteColor,
+                                ),
                               ),
                               Text(
                                 "Giới tính",
@@ -198,8 +206,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textfield(
                           hintText: 'Đăng Xuất',
                           icon: Icons.logout,
-                          onTap: () {
-                            logoutUser(context);
+                          onTap: () => {
+                            Get.offAll(() => LoginScreen()),
+                            displayToastMessage("Bạn đã đăng xuất!", context),
                           },
                         ),
                       ],
@@ -213,15 +222,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  void logoutUser(BuildContext context) async{
-    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    _firebaseAuth.signOut();
-    displayToastMessage("Ban da dang xuat", context);
-  }
-
-  displayToastMessage(String message, BuildContext context){
-    Fluttertoast.showToast(msg:message);
-  }
-
 }

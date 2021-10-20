@@ -9,3 +9,16 @@ var kTitleTextColor = Color(0xff1E1C61);
 var kSearchBackgroundColor = Color(0xffF2F2F2);
 var kSearchTextColor = Color(0xffC0C0C0);
 var kCategoryTextColor = Color(0xff292685);
+
+final kTitleStyle = TextStyle(
+  color: Colors.white,
+  fontFamily: 'CM Sans Serif',
+  fontSize: 26.0,
+  height: 1.5,
+);
+
+final kSubtitleStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 18.0,
+  height: 1.2,
+);

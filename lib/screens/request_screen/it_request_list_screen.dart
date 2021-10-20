@@ -1,78 +1,69 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:it_support/constant.dart';
-import 'package:it_support/screens/components/request_card.dart';
+import 'package:it_support/firebase_database/database.dart';
 
-class RequestScreen extends StatelessWidget {
+class RequestScreen extends StatefulWidget {
+  const RequestScreen({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Danh Sách Yêu Cầu"),
-        backgroundColor: kBlueColor,
-      ),
-      backgroundColor: kBackgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  'Chúng tôi có vài vấn đề !',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: kTitleTextColor,
-                    fontSize: 18,
-                  ),
-                ),
+  _listrequestState createState() => _listrequestState();
+}
+
+class _listrequestState extends State<RequestScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  // final _ref =
+  //     FirebaseDatabase.instance.reference().child('requests').child(user!.uid);
+
+  Widget _buildRequestItem({required Map request}) {
+    return Container(
+      height: 100,
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.people,
+                color: Theme.of(context).primaryColor,
+                size: 20,
               ),
               SizedBox(
-                height: 20,
+                width: 6,
               ),
-              buildRequestList(),
+              Text(
+                request!['problem'],
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
 
-  buildRequestList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 30,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Danh sách yêu cầu'),
       ),
-      child: Column(
-        children: <Widget>[
-          RequestCard(
-            'Le Thi A',
-            'Devices: Macbook Pro 16\nProblem: How to install Windown on MacOS.',
-            'assets/images/Yeti.png',
-            kBlueColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          RequestCard(
-            'Le Thi B',
-            'Devices: Laptop MSI\nProblem: My computer cannot connect to the Internet.',
-            'assets/images/Yeti.png',
-            kYellowColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          RequestCard(
-            'Le Thi C',
-            'Devices: Iphone 13\nProblem: My phone hangs.',
-            'assets/images/Yeti.png',
-            kOrangeColor,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-        ],
+      body: Container(
+        height: double.infinity,
+        child: FirebaseAnimatedList(
+          query: reqRef.child(user!.uid),
+          itemBuilder: (BuildContext context, DataSnapshot snapshot,
+              Animation<double> animation, int index) {
+            Map request = snapshot.value;
+            return _buildRequestItem(request: request);
+          },
+        ),
       ),
     );
   }

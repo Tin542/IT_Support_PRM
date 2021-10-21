@@ -127,7 +127,7 @@ class _BodyState extends State<Body> {
                           'description': descriptionTextEditingController.text,
                           'id_teamView': idTVTextEditingController.text,
                           'pass_TeamView': passTVTextEditingController.text,
-                          'status': 'đang xử lí',
+                          'status': 'đang chờ xử lí',
                           'user_email': displayEmail,
                         });
 

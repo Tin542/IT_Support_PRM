@@ -35,7 +35,7 @@ class _listrequestState extends State<RequestScreen> {
                 width: 6,
               ),
               Text(
-                request!['problem'],
+                request['problem'],
                 style: TextStyle(
                     fontSize: 16,
                     color: Theme.of(context).primaryColor,
@@ -57,7 +57,7 @@ class _listrequestState extends State<RequestScreen> {
       body: Container(
         height: double.infinity,
         child: FirebaseAnimatedList(
-          query: reqRef.child(user!.uid),
+          query: reqRef,
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map request = snapshot.value;

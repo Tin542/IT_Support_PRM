@@ -28,8 +28,21 @@ class _BodyState extends State<Body> {
       TextEditingController();
   final TextEditingController deviceTextEditingController =
       TextEditingController();
-
   final User? user = FirebaseAuth.instance.currentUser;
+
+  String displayEmail = '';
+
+  void getEmail() {
+    usersRef.child(user!.uid).child('email').onValue.listen((event) {
+      // final data = new Map<String, dynamic>.from(event.snapshot.value);
+      // final email = data['email'] as String;
+      final String email = event.snapshot.value;
+      setState(() {
+        displayEmail = '$email';
+        print(displayEmail);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +79,9 @@ class _BodyState extends State<Body> {
                   RoundedInputField(
                     controller: ticketNameTextEditingController,
                     hintText: "Tên vấn đề",
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      getEmail();
+                    },
                   ),
                   RoundedInputField(
                     controller: descriptionTextEditingController,
@@ -101,14 +116,14 @@ class _BodyState extends State<Body> {
                             "Vui lòng điền chi tiết về vấn đề của bạn",
                             context);
                       } else {
-                        reqRef.child(user!.uid).push().set({
+                        reqRef.push().set({
                           'device': deviceTextEditingController.text,
                           'problem': ticketNameTextEditingController.text,
                           'description': descriptionTextEditingController.text,
                           'id_teamView': idTVTextEditingController.text,
                           'pass_TeamView': passTVTextEditingController.text,
                           'status': 'đang xử lí',
-                          // 'user_id': reqRef.child(user!.uid)
+                          'user_email': displayEmail,
                         });
 
                         Navigator.push(

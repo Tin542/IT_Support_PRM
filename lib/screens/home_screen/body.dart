@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
-import 'package:it_support/screens/components/backgound.dart';
+import 'package:it_support/screens/home_screen/backgound.dart';
 import 'package:it_support/screens/components/dropdown_button.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
-import 'package:it_support/screens/request_screen/it_support_list_screen.dart';
+import 'package:it_support/screens/request_screen/it_request_list_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -74,12 +75,12 @@ class _BodyState extends State<Body> {
                   ),
                   RoundedInputField(
                     controller: idTVTextEditingController,
-                    hintText: "ID teamView",
+                    hintText: "ID teamView (nếu có)",
                     onChanged: (value) {},
                   ),
                   RoundedInputField(
                     controller: passTVTextEditingController,
-                    hintText: "Pass teamView",
+                    hintText: "Pass teamView (nếu có)",
                     onChanged: (value) {},
                   ),
                   // RoundedInputField(
@@ -88,14 +89,34 @@ class _BodyState extends State<Body> {
                   //     icon: Icons.drive_folder_upload),
                   FlatButton(
                     onPressed: () {
-                      reqRef.child(user!.uid).push().set({
-                        'device': deviceTextEditingController.text,
-                        'problem': ticketNameTextEditingController.text,
-                        'description': descriptionTextEditingController.text,
-                        'id_teamView': idTVTextEditingController.text,
-                        'pass_TeamView': passTVTextEditingController.text,
-                        'status': 'đang xử lí'
-                      });
+                      if (deviceTextEditingController.text.isEmpty) {
+                        displayToastMessage(
+                            "Vui lòng điền tên thiết bị", context);
+                      } else if (ticketNameTextEditingController.text.isEmpty) {
+                        displayToastMessage(
+                            "Vui lòng điền vấn đề của bạn", context);
+                      } else if (descriptionTextEditingController
+                          .text.isEmpty) {
+                        displayToastMessage(
+                            "Vui lòng điền chi tiết về vấn đề của bạn",
+                            context);
+                      } else {
+                        reqRef.child(user!.uid).push().set({
+                          'device': deviceTextEditingController.text,
+                          'problem': ticketNameTextEditingController.text,
+                          'description': descriptionTextEditingController.text,
+                          'id_teamView': idTVTextEditingController.text,
+                          'pass_TeamView': passTVTextEditingController.text,
+                          'status': 'đang xử lí',
+                          // 'user_id': reqRef.child(user!.uid)
+                        });
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    goToListRequest(context)));
+                      }
                     },
                     child: Text(
                       "SUBMIT",
@@ -111,30 +132,11 @@ class _BodyState extends State<Body> {
     );
   }
 
-  void submitRequest(BuildContext context) async {
-    // final User? firebaseUser = (await _firebaseAuth
-    //         .createUserWithEmailAndPassword(
-    //             email: emailTextEditingController.text,
-    //             password: passwordTextEditingController.text)
-    //         .catchError((errMsg) {
-    //   displayToastMessage("Error: " + errMsg.toString(), context);
-    // }))
-    //     .user;
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
+  }
 
-    // if (firebaseUser != null) {
-    //   //luu thong tin user len database
-    //   Map userDataMap = {
-    //     "name": nameTextEditingController.text.trim(),
-    //     "email": emailTextEditingController.text.trim(),
-    //   };
-
-    //   usersRef.child(firebaseUser.uid).set(userDataMap);
-    //   displayToastMessage("Tài khoản của bạn đã được tạo", context);
-
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    // } else {
-    //   displayToastMessage("Người dùng mới không được tạo", context);
-    // }
+  Widget goToListRequest(BuildContext context) {
+    return RequestScreen();
   }
 }

@@ -16,6 +16,13 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getEmail();
+  }
+
   final TextEditingController ticketNameTextEditingController =
       TextEditingController();
   final TextEditingController descriptionTextEditingController =
@@ -79,9 +86,7 @@ class _BodyState extends State<Body> {
                   RoundedInputField(
                     controller: ticketNameTextEditingController,
                     hintText: "Tên vấn đề",
-                    onChanged: (value) {
-                      getEmail();
-                    },
+                    onChanged: (value) {},
                   ),
                   RoundedInputField(
                     controller: descriptionTextEditingController,

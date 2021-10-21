@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
+import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
 import 'package:it_support/screens/profile_screen/edit_profile_screen.dart';
 
@@ -13,9 +15,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  displayToastMessage(String message, BuildContext context) {
-    Fluttertoast.showToast(msg: message);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getProfileuser();
   }
+  final User? user = FirebaseAuth.instance.currentUser;
+  String displayEmail = '';
+  String displayGender = '';
+  String displayName = '';
+  String displayPhone = '';
 
   Widget textfield({@required hintText, @required icon, onTap}) {
     return Material(
@@ -73,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Text(
-                        "Nguyen Van A",
+                        displayName,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -125,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               Text(
-                                "Tài khoản",
+                                "Thông tin",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 22,
@@ -155,15 +165,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         textfield(
-                          hintText: 'user@gmail.com',
+                          hintText: displayEmail,
                           icon: Icons.email_outlined,
                         ),
                         textfield(
-                          hintText: '10/07/2000',
-                          icon: Icons.date_range,
+                          hintText: displayGender,
+                          icon: Icons.female,
                         ),
                         textfield(
-                          hintText: '+84 123456789',
+                          hintText: displayPhone,
                           icon: Icons.phone,
                         ),
                         Container(
@@ -185,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               Text(
-                                "Giới tính",
+                                "Cài đặt",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 22,
@@ -221,5 +231,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  void getProfileuser() {
+    usersRef.child(user!.uid).child('email').onValue.listen((event) {
+      final data = new Map<String, dynamic>.from(event.snapshot.value);
+      final email = data['email'] as String;
+      final gender = data['gender'] as String;
+      final name = data['name'] as String;
+      final phone = data['phone'] as String;
+      setState(() {
+        displayEmail = '$email';
+        displayGender = '$gender';
+        displayName = '$name';
+        displayPhone = '$phone';
+      });
+    });
+  }
+
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
   }
 }

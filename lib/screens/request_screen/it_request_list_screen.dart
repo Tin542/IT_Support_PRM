@@ -21,30 +21,28 @@ class _listrequestState extends State<RequestScreen> {
     return Container(
       height: 100,
       color: Colors.white,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.people,
-                color: Theme.of(context).primaryColor,
-                size: 20,
-              ),
-              SizedBox(
-                width: 6,
-              ),
-              Text(
-                request['problem'],
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
+      child: GestureDetector(
+        onTap: () {
+          print("Container clicked");
+        },
+        child: ListTile(
+          leading: const Icon(Icons.flight_land),
+          title: Text(request['problem']),
+          // children: [
+          //   Icon(
+          //     Icons.people,
+          //     color: Theme.of(context).primaryColor,
+          //     size: 20,
+          //   ),
+          //   Text(
+          //     request['problem'],
+          //     style: TextStyle(
+          //         fontSize: 16,
+          //         color: Theme.of(context).primaryColor,
+          //         fontWeight: FontWeight.w600),
+          //   ),
+          // ],
+        ),
       ),
     );
   }

@@ -234,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void getProfileuser() {
-    usersRef.child(user!.uid).child('email').onValue.listen((event) {
+    usersRef.child(user!.uid).onValue.listen((event) {
       final data = new Map<String, dynamic>.from(event.snapshot.value);
       final email = data['email'] as String;
       final gender = data['gender'] as String;
@@ -245,6 +245,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         displayGender = '$gender';
         displayName = '$name';
         displayPhone = '$phone';
+        print(displayEmail);
+        print(displayGender);
+        print(displayName);
+        print(displayPhone);
+
       });
     });
   }

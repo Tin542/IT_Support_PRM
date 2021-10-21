@@ -13,6 +13,7 @@ class RequestScreen extends StatefulWidget {
 
 class _listrequestState extends State<RequestScreen> {
   User? user = FirebaseAuth.instance.currentUser;
+
   // final _ref =
   //     FirebaseDatabase.instance.reference().child('requests').child(user!.uid);
 
@@ -57,7 +58,7 @@ class _listrequestState extends State<RequestScreen> {
       body: Container(
         height: double.infinity,
         child: FirebaseAnimatedList(
-          query: reqRef,
+          query: reqRef.orderByChild("user_email").equalTo(user!.email),
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map request = snapshot.value;

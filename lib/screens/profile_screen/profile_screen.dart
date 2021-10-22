@@ -21,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     getProfileuser();
   }
+
   final User? user = FirebaseAuth.instance.currentUser;
   String displayEmail = '';
   String displayGender = '';
@@ -245,11 +246,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         displayGender = '$gender';
         displayName = '$name';
         displayPhone = '$phone';
-        print(displayEmail);
-        print(displayGender);
+
         print(displayName);
         print(displayPhone);
-
+        print(displayEmail);
+        print(displayGender);
       });
     });
   }

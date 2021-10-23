@@ -3,6 +3,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:it_support/firebase_database/database.dart';
+import 'package:it_support/models/request.dart';
+import 'package:it_support/screens/request_screen/it_request_detail_screen.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({Key? key}) : super(key: key);
@@ -13,37 +15,36 @@ class RequestScreen extends StatefulWidget {
 
 class _listrequestState extends State<RequestScreen> {
   User? user = FirebaseAuth.instance.currentUser;
-
-  // final _ref =
-  //     FirebaseDatabase.instance.reference().child('requests').child(user!.uid);
+  String reqEmail = '';
+  String reqProblem = '';
+  String reqDescription = '';
+  String reqDevice = '';
+  String reqIdTeamView = '';
+  String reqPassTeamView = '';
+  String reqStatus = '';
 
   Widget _buildRequestItem({required Map request}) {
     return Container(
       height: 100,
       color: Colors.white,
-      child: GestureDetector(
-        onTap: () {
-          print("Container clicked");
-        },
-        child: ListTile(
-          leading: const Icon(Icons.flight_land),
-          title: Text(request['problem']),
-          // children: [
-          //   Icon(
-          //     Icons.people,
-          //     color: Theme.of(context).primaryColor,
-          //     size: 20,
-          //   ),
-          //   Text(
-          //     request['problem'],
-          //     style: TextStyle(
-          //         fontSize: 16,
-          //         color: Theme.of(context).primaryColor,
-          //         fontWeight: FontWeight.w600),
-          //   ),
-          // ],
-        ),
-      ),
+      child: ListTile(
+          leading: const Icon(Icons.computer),
+          title: Text(request['device'] + " - " + request['problem']),
+          subtitle: Text("Status: " + request['status']),
+          onTap: () {
+            // print("email: " + request['user_email']);
+            // print("problem: " + request['problem']);
+            // print("des: " + request['description']);
+            // print("Status: " + request['status']);
+            // print("id TV: " + request['id_teamView']);
+            // print("pass TV: " + request['pass_TeamView']);
+            final requestDetail = Request.fromRTDB(request);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        DetailRequestScreen(request: requestDetail)));
+          }),
     );
   }
 

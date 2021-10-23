@@ -1,3 +1,4 @@
+import 'package:animated_textformfields/animated_textformfield/animated_textformfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,9 +20,12 @@ class _EditProfileState extends State<EditProfile> {
   String displayGender = '';
   String displayName = '';
   String displayPhone = '';
+  String displayDob = '';
+  FocusNode myFocusNode1 = FocusNode();
   TextEditingController nameTextNameController = TextEditingController();
   TextEditingController genderTextNameController = TextEditingController();
   TextEditingController phoneTextNameController = TextEditingController();
+  TextEditingController dobTextEditingController = TextEditingController();
 
 
   TextEditingController textFirstNameController = TextEditingController();
@@ -133,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 80),
+                        padding: const EdgeInsets.only(left: 90),
                         child: TextField(
                           controller: nameTextNameController,
                           decoration: InputDecoration(
@@ -158,41 +162,14 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(80, 5, 0, 0),
-                        child: Radio(
-                          value: "Nam",
-                          groupValue: selectedGender,
-                          onChanged: (value) {
-                            setSelectedGender(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(120, 18, 0, 0),
-                        child: Text(
-                          "Nam",
-                          style: TextStyle(
-                            fontSize: 19,
+                        padding: const EdgeInsets.only(left: 90),
+                        child: TextField(
+                          controller: genderTextNameController,
+                          decoration: InputDecoration(
+                            hintText: displayGender,
+                            border: OutlineInputBorder(),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(185, 5, 0, 0),
-                        child: Radio(
-                          value: "Nữ",
-                          groupValue: selectedGender,
-                          onChanged: (value) {
-                            setSelectedGender(value);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(225, 18, 0, 0),
-                        child: Text(
-                          "Nữ",
-                          style: TextStyle(
-                            fontSize: 19,
-                          ),
+                          keyboardType: TextInputType.text,
                         ),
                       ),
                     ],
@@ -210,7 +187,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 80),
+                        padding: const EdgeInsets.only(left: 90),
                         child: TextField(
                           controller: phoneTextNameController,
                           decoration: InputDecoration(
@@ -223,10 +200,70 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                   SizedBox(height: 15),
-                  Stack(
+                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 20, 0),
+                        child: Text(
+                          "Ngày sinh:",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AnimatedTextFormField(
+                              width: 190,
+                              height: 48.0,
+                              inputType: TextInputType.text,
+                              hintText: displayDob,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'pick date';
+                                }
+                                return null;
+                              },
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                              ),
+                              controller: dobTextEditingController,
+                              focusNode: myFocusNode1,
+                              cornerRadius: BorderRadius.circular(14.0),
+                              onTap: () async {
+                                DateTime date = DateTime(1900);
+
+                                FocusScope.of(context)
+                                    .requestFocus(new FocusNode());
+
+                                date = (await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100)))!;
+                                var formattedDate =
+                                    "${date.day}-${date.month}-${date.year}";
+                                dobTextEditingController.text =
+                                    formattedDate.toString();
+                              },
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
                         child: Text(
                           "Email:",
                           style: TextStyle(
@@ -236,12 +273,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 80),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: displayEmail,
-                            border: OutlineInputBorder(),
+                        child: Text(
+                          displayEmail,
+                          style: TextStyle(
+                            fontSize: 22,
                           ),
-                          keyboardType: TextInputType.emailAddress,
                         ),
                       ),
                     ],
@@ -293,6 +329,8 @@ class _EditProfileState extends State<EditProfile> {
     usersRef.child(user!.uid).update({
       'name' : nameTextNameController.text.trim(),
       'phone' : phoneTextNameController.text.trim(),
+      "gender": genderTextNameController.text.trim(),
+      'dob' : dobTextEditingController.text.trim(),
     });
 
     displayToastMessage("Tài khoản của bạn đã được tạo", context);
@@ -305,15 +343,18 @@ class _EditProfileState extends State<EditProfile> {
       final gender = data['gender'] as String;
       final name = data['name'] as String;
       final phone = data['phone'] as String;
+      final dob = data['dob'] as String;
       setState(() {
         displayEmail = '$email';
         displayGender = '$gender';
         displayName = '$name';
         displayPhone = '$phone';
+        displayDob = '$dob';
         print(displayEmail);
         print(displayGender);
         print(displayName);
         print(displayPhone);
+        print(displayDob);
       });
     });
   }

@@ -51,6 +51,7 @@ class _listrequestState extends State<RequestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Danh sách yêu cầu'),
       ),
       body: Container(

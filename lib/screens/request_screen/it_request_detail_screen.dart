@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:it_support/models/request.dart';
+import 'package:it_support/screens/call_screen/videocall_screen.dart';
 
 import '../../constant.dart';
 
@@ -62,12 +63,23 @@ class DetailRequestScreen extends StatelessWidget {
                   initialValue: request.description),
               SizedBox(height: 30),
               TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Trạng thái",
-                  ),
-                  initialValue: request.status),
+                readOnly: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Trạng thái",
+                ),
+                initialValue: request.status,
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CallScreen()));
+                },
+                child: Text(
+                  "CALL VIDEO",
+                  style: TextStyle(color: Colors.blue, fontSize: 16),
+                ),
+              ),
             ],
           ),
         ),

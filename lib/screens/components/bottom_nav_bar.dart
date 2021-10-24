@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:it_support/constant.dart';
 import 'package:it_support/screens/home_screen/home_screen.dart';
+import 'package:it_support/screens/news_screen/category_news.dart';
 import 'package:it_support/screens/request_screen/it_request_list_screen.dart';
 import 'package:it_support/screens/request_screen/it_support_list_screen.dart';
 import 'package:it_support/screens/chat_screen/list_chat_screen.dart';
@@ -18,6 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomeScreenCustomer(),
     RequestScreen(),
     ListChatScreen(),
+    CategoryNews(),
     ProfileScreen(),
   ];
   @override
@@ -37,15 +39,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: "Trang chủ",
+                label: "Trang Chủ",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.format_list_bulleted),
-                label: "Danh sách IT",
+                label: "Danh Sách IT",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.message),
-                label: "Trò truyện",
+                label: "Tin Nhắn",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.feed),
+                label: "Tin Tức",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

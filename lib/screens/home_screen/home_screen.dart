@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:it_support/firebase_database/database.dart';
+import 'package:it_support/screens/chatbot_screen/chatbot_screen.dart';
 import 'package:it_support/screens/home_screen/body.dart';
 
 import 'dart:ui';
@@ -41,7 +43,18 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Hello, " + userName),
+          title: Text("Xin chào, " + userName),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.smart_toy),
+              color: Colors.white,
+              onPressed: () {
+                Get.to(ChatBotScreen(),
+                    transition: Transition.downToUp,
+                    duration: Duration(milliseconds: 600));
+              },
+            )
+          ],
         ),
         body: Body());
   }

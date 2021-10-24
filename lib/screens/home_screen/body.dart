@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:it_support/firebase_database/database.dart';
+import 'package:it_support/screens/chatbot_screen/chatbot_screen.dart';
 import 'package:it_support/screens/home_screen/backgound.dart';
-import 'package:it_support/screens/components/dropdown_button.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
 import 'package:it_support/screens/request_screen/it_request_list_screen.dart';
 

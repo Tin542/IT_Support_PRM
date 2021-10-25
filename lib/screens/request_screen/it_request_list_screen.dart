@@ -4,6 +4,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/models/request.dart';
+import 'package:it_support/screens/feedback_screen/feedback_screen.dart';
 import 'package:it_support/screens/request_screen/it_request_detail_screen.dart';
 
 class RequestScreen extends StatefulWidget {
@@ -23,28 +24,148 @@ class _listrequestState extends State<RequestScreen> {
   String reqPassTeamView = '';
   String reqStatus = '';
 
-  Widget _buildRequestItem({required Map request}) {
-    return Container(
-      height: 100,
-      color: Colors.white,
-      child: ListTile(
-          leading: const Icon(Icons.computer),
-          title: Text(request['device'] + " - " + request['problem']),
-          subtitle: Text("Status: " + request['status']),
-          onTap: () {
-            // print("email: " + request['user_email']);
-            // print("problem: " + request['problem']);
-            // print("des: " + request['description']);
-            // print("Status: " + request['status']);
-            // print("id TV: " + request['id_teamView']);
-            // print("pass TV: " + request['pass_TeamView']);
-            final requestDetail = Request.fromRTDB(request);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        DetailRequestScreen(request: requestDetail)));
-          }),
+  Widget _buildRequestItem({required Map request, required String? id}) {
+    return GestureDetector(
+      onTap: () {
+        final requestDetail = Request.fromRTDB(request);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DetailRequestScreen(request: requestDetail)));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.all(10),
+        height: 169,
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.report_problem,
+                  color: Theme.of(context).primaryColor,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  request['problem'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.devices_other_outlined,
+                  color: Colors.red,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  request['device'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.description_outlined,
+                  color: Colors.purple,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  request['user_email'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.purple,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.sort_outlined,
+                  color: Colors.amberAccent,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  request['status'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.amberAccent,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FeedbackScreen(id: id)),
+                    );
+                  },
+                  child: request['status'] == "đã xử lí xong"
+                      ? Row(
+                          children: [
+                            Icon(
+                              Icons.rate_review,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Text(' Đánh giá',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w600)),
+                          ],
+                        )
+                      : Text(""),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -62,7 +183,8 @@ class _listrequestState extends State<RequestScreen> {
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
             Map request = snapshot.value;
-            return _buildRequestItem(request: request);
+            String? key = snapshot.key;
+            return _buildRequestItem(request: request, id: key);
           },
         ),
       ),

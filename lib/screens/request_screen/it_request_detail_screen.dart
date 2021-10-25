@@ -45,22 +45,24 @@ class DetailRequestScreen extends StatelessWidget {
               //     initialValue: request.passTeamView),
               // SizedBox(height: 30),
               TextFormField(
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Vấn đề",
-                  ),
-                  initialValue: request.problem),
+                readOnly: true,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Vấn đề",
+                ),
+                initialValue: request.problem,
+              ),
               SizedBox(height: 30),
               TextFormField(
-                  readOnly: true,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Chi tiết vấn đề",
-                  ),
-                  initialValue: request.description),
+                readOnly: true,
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Chi tiết vấn đề",
+                ),
+                initialValue: request.description,
+              ),
               SizedBox(height: 30),
               TextFormField(
                 readOnly: true,
@@ -70,15 +72,22 @@ class DetailRequestScreen extends StatelessWidget {
                 ),
                 initialValue: request.status,
               ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CallScreen()));
-                },
-                child: Text(
-                  "CALL VIDEO",
-                  style: TextStyle(color: Colors.blue, fontSize: 16),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: request.status == "đang xử lí"
+                    ? FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CallScreen()));
+                        },
+                        child: Text(
+                          "CALL VIDEO",
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                        ),
+                      )
+                    : Text(""),
               ),
             ],
           ),

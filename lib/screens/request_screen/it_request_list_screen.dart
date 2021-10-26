@@ -46,28 +46,6 @@ class _listrequestState extends State<RequestScreen> {
             Row(
               children: [
                 Icon(
-                  Icons.report_problem,
-                  color: Theme.of(context).primaryColor,
-                  size: 20,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                Text(
-                  request['problem'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Icon(
                   Icons.devices_other_outlined,
                   color: Colors.red,
                   size: 20,
@@ -80,6 +58,28 @@ class _listrequestState extends State<RequestScreen> {
                   style: TextStyle(
                       fontSize: 16,
                       color: Colors.red,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.report_problem,
+                  color: Theme.of(context).primaryColor,
+                  size: 20,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  request['problem'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w600),
                 ),
               ],
@@ -111,21 +111,20 @@ class _listrequestState extends State<RequestScreen> {
             ),
             Row(
               children: [
-                Icon(
-                  Icons.sort_outlined,
-                  color: Colors.amberAccent,
-                  size: 20,
-                ),
+                Text("Status: "),
                 SizedBox(
                   width: 6,
                 ),
-                Text(
-                  request['status'],
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.amberAccent,
-                      fontWeight: FontWeight.w600),
-                ),
+                Text(request['status'],
+                    style: request['status'] == 'đã xử lí xong'
+                        ? TextStyle(
+                            fontSize: 16,
+                            color: Colors.green[300],
+                            fontWeight: FontWeight.w600)
+                        : TextStyle(
+                            fontSize: 16,
+                            color: Colors.amberAccent,
+                            fontWeight: FontWeight.w600)),
               ],
             ),
             SizedBox(

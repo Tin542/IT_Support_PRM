@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
+import 'package:it_support/screens/components/bottom_nav_bar.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
 import 'package:it_support/screens/home_screen/backgound.dart';
-import 'package:it_support/screens/home_screen/home_screen.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({
@@ -91,8 +91,7 @@ class _FeedbackState extends State<FeedbackScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const HomeScreenCustomer()));
+                                builder: (context) => BottomNavBar()));
                       },
                       child: const Text("GỬI ĐÁNH GIÁ"),
                     )

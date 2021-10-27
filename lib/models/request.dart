@@ -6,6 +6,7 @@ class Request {
   final String passTeamView;
   final String userEmail;
   final String status;
+  final String category;
   Request({
     required this.problem,
     required this.description,
@@ -14,6 +15,7 @@ class Request {
     required this.passTeamView,
     required this.userEmail,
     required this.status,
+    required this.category,
   });
 
   factory Request.fromRTDB(Map<dynamic, dynamic> data) {
@@ -25,6 +27,7 @@ class Request {
       passTeamView: data['pass_teamView'] ?? '',
       userEmail: data['user_email'] ?? '',
       status: data['status'] ?? '',
+      category: data['category'] ?? '',
     );
   }
 }

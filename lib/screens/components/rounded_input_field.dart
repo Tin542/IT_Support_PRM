@@ -19,6 +19,8 @@ class RoundedInputField extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return TextFieldContainer(
       child: TextField(
+        keyboardType: TextInputType.multiline,
+        maxLines: null,
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(

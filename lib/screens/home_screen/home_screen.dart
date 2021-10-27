@@ -5,10 +5,6 @@ import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/chatbot_screen/chatbot_screen.dart';
 import 'package:it_support/screens/home_screen/body.dart';
 
-import 'dart:ui';
-
-import '../components/load_image.dart';
-
 class HomeScreenCustomer extends StatefulWidget {
   const HomeScreenCustomer({Key? key}) : super(key: key);
 
@@ -33,7 +29,6 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getName();
   }
@@ -46,16 +41,16 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
           title: Text("Xin chào, " + userName),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.smart_toy),
+              icon: const Icon(Icons.smart_toy),
               color: Colors.white,
               onPressed: () {
-                Get.to(ChatBotScreen(),
+                Get.to(const ChatBotScreen(),
                     transition: Transition.downToUp,
-                    duration: Duration(milliseconds: 600));
+                    duration: const Duration(milliseconds: 600));
               },
             )
           ],
         ),
-        body: Body());
+        body: const Body());
   }
 }

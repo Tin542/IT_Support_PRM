@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
 import 'package:it_support/screens/home_screen/backgound.dart';
+import 'package:it_support/screens/home_screen/home_screen.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({
@@ -23,7 +25,7 @@ class _FeedbackState extends State<FeedbackScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Rating"),
+        title: const Text("Mức độ hài lòng của bạn"),
       ),
       body: Background(
         child: Column(
@@ -33,12 +35,12 @@ class _FeedbackState extends State<FeedbackScreen> {
               borderRadius: BorderRadius.circular(25),
               child: Container(
                 width: size.width * 0.8,
-                color: Color(0xFFCFE9F1),
+                color: const Color(0xFFCFE9F1),
                 // color: Colors.blueGrey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Padding(
@@ -49,8 +51,9 @@ class _FeedbackState extends State<FeedbackScreen> {
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
@@ -64,7 +67,7 @@ class _FeedbackState extends State<FeedbackScreen> {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     RoundedInputField(
@@ -84,8 +87,14 @@ class _FeedbackState extends State<FeedbackScreen> {
                           'rating': star,
                           'feedback': FeddbackTextEditingController.text,
                         });
+                        displayToastMessage("Đánh giá thành công", context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const HomeScreenCustomer()));
                       },
-                      child: Text("GỬI ĐÁNH GIÁ"),
+                      child: const Text("GỬI ĐÁNH GIÁ"),
                     )
                   ],
                 ),
@@ -96,4 +105,8 @@ class _FeedbackState extends State<FeedbackScreen> {
       ),
     );
   }
+}
+
+displayToastMessage(String message, BuildContext context) {
+  Fluttertoast.showToast(msg: message);
 }

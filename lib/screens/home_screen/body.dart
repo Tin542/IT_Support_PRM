@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:it_support/firebase_database/database.dart';
-import 'package:it_support/screens/chatbot_screen/chatbot_screen.dart';
 import 'package:it_support/screens/home_screen/backgound.dart';
 import 'package:it_support/screens/components/rounded_input_field.dart';
 import 'package:it_support/screens/request_screen/it_request_list_screen.dart';
@@ -18,7 +16,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getEmail();
   }
@@ -35,14 +32,16 @@ class _BodyState extends State<Body> {
       TextEditingController();
   final TextEditingController deviceTextEditingController =
       TextEditingController();
+  final TextEditingController cateTextEditingController =
+      TextEditingController();
+
+  late String _typeSelected = '';
   final User? user = FirebaseAuth.instance.currentUser;
 
   String displayEmail = '';
 
   void getEmail() {
     usersRef.child(user!.uid).child('email').onValue.listen((event) {
-      // final data = new Map<String, dynamic>.from(event.snapshot.value);
-      // final email = data['email'] as String;
       final String email = event.snapshot.value;
       setState(() {
         displayEmail = '$email';
@@ -70,18 +69,39 @@ class _BodyState extends State<Body> {
             borderRadius: BorderRadius.circular(25),
             child: Container(
               width: size.width * 0.8,
-              color: Color(0xFFCFE9F1),
+              color: const Color(0xFFCFE9F1),
               // color: Colors.blueGrey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    child: Container(
+                      height: 40,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          listProblem('IOS'),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          listProblem('android'),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          listProblem('Windown'),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          listProblem('MacOS'),
+                        ],
+                      ),
+                    ),
+                  ),
                   RoundedInputField(
                     controller: deviceTextEditingController,
-                    hintText: "Thiết bị",
-                    onChanged: (value) {
-                      controller:
-                      deviceTextEditingController;
-                    },
+                    hintText: "Tên thiết bị",
+                    onChanged: (value) {},
                   ),
                   RoundedInputField(
                     controller: ticketNameTextEditingController,
@@ -107,6 +127,7 @@ class _BodyState extends State<Body> {
                   //     hintText: "Explan your problem by picture...",
                   //     onChanged: (value) {},
                   //     icon: Icons.drive_folder_upload),
+
                   FlatButton(
                     onPressed: () {
                       if (deviceTextEditingController.text.isEmpty) {
@@ -122,6 +143,7 @@ class _BodyState extends State<Body> {
                             context);
                       } else {
                         reqRef.push().set({
+                          'category': _typeSelected,
                           'device': deviceTextEditingController.text,
                           'problem': ticketNameTextEditingController.text,
                           'description': descriptionTextEditingController.text,
@@ -140,7 +162,7 @@ class _BodyState extends State<Body> {
                                     goToListRequest(context)));
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       "SUBMIT",
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
@@ -159,6 +181,32 @@ class _BodyState extends State<Body> {
   }
 
   Widget goToListRequest(BuildContext context) {
-    return RequestScreen();
+    return const RequestScreen();
+  }
+
+  Widget listProblem(String title) {
+    return InkWell(
+      child: Container(
+        height: 40,
+        width: 90,
+        decoration: BoxDecoration(
+          color: _typeSelected == title
+              ? Colors.green
+              : Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _typeSelected = title;
+        });
+      },
+    );
   }
 }

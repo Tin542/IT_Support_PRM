@@ -19,7 +19,15 @@ class DetailRequestScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              TextFormField(
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Hệ điều hành",
+                  ),
+                  initialValue: request.category),
+              const SizedBox(height: 30),
               TextFormField(
                   readOnly: true,
                   decoration: const InputDecoration(
@@ -27,7 +35,7 @@ class DetailRequestScreen extends StatelessWidget {
                     labelText: "Thiết bị",
                   ),
                   initialValue: request.device),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               // TextFormField(
               //     readOnly: true,
               //     decoration: const InputDecoration(
@@ -52,7 +60,7 @@ class DetailRequestScreen extends StatelessWidget {
                 ),
                 initialValue: request.problem,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               TextFormField(
                 readOnly: true,
                 keyboardType: TextInputType.multiline,
@@ -63,7 +71,7 @@ class DetailRequestScreen extends StatelessWidget {
                 ),
                 initialValue: request.description,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               TextFormField(
                 readOnly: true,
                 decoration: const InputDecoration(
@@ -82,12 +90,12 @@ class DetailRequestScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => CallScreen()));
                         },
-                        child: Text(
+                        child: const Text(
                           "CALL VIDEO",
                           style: TextStyle(color: Colors.blue, fontSize: 16),
                         ),
                       )
-                    : Text(""),
+                    : const Text(""),
               ),
             ],
           ),

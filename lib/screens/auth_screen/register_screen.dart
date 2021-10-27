@@ -5,8 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
 
-
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -19,10 +17,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController phoneTextEditingController = TextEditingController();
-  TextEditingController genderTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   TextEditingController dobTextEditingController = TextEditingController();
-
+  late String _choosegender = '';
 
   @override
   Widget build(BuildContext context) {
@@ -58,27 +55,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                child: TextField(
-                  controller: genderTextEditingController,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                  decoration: InputDecoration(
-                      labelText: "GIỚI TÍNH",
-                      labelStyle:
-                      TextStyle(color: Color(0xff888888), fontSize: 15)),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Text(
+                  "GIỚI TÍNH",
+                  style: TextStyle(color: Color(0xff888888), fontSize: 15),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 10, 0, 0),
+                child: Container(
+                  height: 30,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _gender('Nam'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      _gender('Nữ'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      _gender('Khác'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
                 child: TextField(
-                  controller: phoneTextEditingController,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                  decoration: InputDecoration(
-                      labelText: "SỐ ĐIỆN THOẠI",
-                      labelStyle:
-                      TextStyle(color: Color(0xff888888), fontSize: 15)),
-                    keyboardType: TextInputType.phone
-                ),
+                    controller: phoneTextEditingController,
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                    decoration: InputDecoration(
+                        labelText: "SỐ ĐIỆN THOẠI",
+                        labelStyle:
+                            TextStyle(color: Color(0xff888888), fontSize: 15)),
+                    keyboardType: TextInputType.phone),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
@@ -103,17 +121,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextStyle(color: Color(0xff888888), fontSize: 15)),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "NGÀY SINH",
-                        style: TextStyle(color: Color(0xff888888), fontSize: 15)
-                    ),
-
+                    Text("NGÀY SINH",
+                        style:
+                            TextStyle(color: Color(0xff888888), fontSize: 15)),
                   ],
                 ),
               ),
@@ -184,18 +199,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
-                    onPressed: (){
+                    onPressed: () {
                       //dobTextEditingController
-                      if(nameTextEditingController.text.length < 1){
+                      if (nameTextEditingController.text.length < 1) {
                         displayToastMessage("Tên ít nhất 2 kí tự", context);
-                      } else if (emailTextEditingController.text.isEmpty){
-                        displayToastMessage("Email không thể để trống", context);
-                      } else if (!emailTextEditingController.text.contains("@")){
+                      } else if (emailTextEditingController.text.isEmpty) {
+                        displayToastMessage(
+                            "Email không thể để trống", context);
+                      } else if (!emailTextEditingController.text
+                          .contains("@")) {
                         displayToastMessage("Email không hợp lệ", context);
-                      } else if (dobTextEditingController.text.isEmpty){
-                        displayToastMessage("Vui lòng nhập ngày sinh của bạn", context);
-                      } else if (passwordTextEditingController.text.length < 7){
-                        displayToastMessage("Password ít nhất 8 kí tự", context);
+                      } else if (dobTextEditingController.text.isEmpty) {
+                        displayToastMessage(
+                            "Vui lòng nhập ngày sinh của bạn", context);
+                      } else if (passwordTextEditingController.text.length <
+                          7) {
+                        displayToastMessage(
+                            "Password ít nhất 8 kí tự", context);
                       } else {
                         registerNewUser(context);
                       }
@@ -214,37 +234,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget _gender(String title) {
+    return InkWell(
+      child: Container(
+        height: 30,
+        width: 80,
+        decoration: BoxDecoration(
+          color: _choosegender == title
+              ? Colors.green
+              : Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _choosegender = title;
+        });
+      },
+    );
+  }
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;// authen vao firebase
-  // final dailySpecialRef = database.reference.child("");
+  final FirebaseAuth _firebaseAuth =
+      FirebaseAuth.instance; // authen vao firebase
   void registerNewUser(BuildContext context) async {
     final User? firebaseUser = (await _firebaseAuth
-        .createUserWithEmailAndPassword(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text).catchError((errMsg){
-          displayToastMessage("Error: " + errMsg.toString(), context);
-    })).user;
+            .createUserWithEmailAndPassword(
+                email: emailTextEditingController.text,
+                password: passwordTextEditingController.text)
+            .catchError((errMsg) {
+      displayToastMessage("Error: " + errMsg.toString(), context);
+    }))
+        .user;
 
-    if(firebaseUser != null){
+    if (firebaseUser != null) {
       //luu thong tin user len database
-      Map userDataMap ={
+      Map userDataMap = {
         "name": nameTextEditingController.text.trim(),
         "email": emailTextEditingController.text.trim(),
         "phone": phoneTextEditingController.text.trim(),
-        "gender": genderTextEditingController.text.trim(),
+        "gender": _choosegender,
         "dob": dobTextEditingController.text.trim(),
-
       };
 
       usersRef.child(firebaseUser.uid).set(userDataMap);
       displayToastMessage("Tài khoản của bạn đã được tạo", context);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-    } else{
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    } else {
       displayToastMessage("Người dùng mới không được tạo", context);
     }
   }
-  displayToastMessage(String message, BuildContext context){
-    Fluttertoast.showToast(msg:message);
+
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
   }
 }

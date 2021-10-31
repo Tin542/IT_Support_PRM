@@ -86,6 +86,7 @@ class _FeedbackState extends State<FeedbackScreen> {
                         reqRef.child(widget.id!).update({
                           'rating': star,
                           'feedback': FeddbackTextEditingController.text,
+                          'status': 'Đã xử lí xong'
                         });
                         displayToastMessage("Đánh giá thành công", context);
                         Navigator.push(

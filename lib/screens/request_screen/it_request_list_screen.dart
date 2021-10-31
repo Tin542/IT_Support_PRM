@@ -32,7 +32,10 @@ class _listrequestState extends State<RequestScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailRequestScreen(request: requestDetail),
+            builder: (context) => DetailRequestScreen(
+              request: requestDetail,
+              id: id,
+            ),
           ),
         );
       },

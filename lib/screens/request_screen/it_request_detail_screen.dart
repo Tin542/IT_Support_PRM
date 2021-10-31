@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:it_support/models/request.dart';
 import 'package:it_support/screens/call_screen/videocall_screen.dart';
+import 'package:it_support/screens/payment_screen/payment_screen.dart';
 
 import '../../constant.dart';
 
 class DetailRequestScreen extends StatelessWidget {
+  final String? id;
   final Request request;
-  const DetailRequestScreen({Key? key, required this.request})
+  const DetailRequestScreen({Key? key, required this.request, required this.id})
       : super(key: key);
 
   @override
@@ -94,6 +96,26 @@ class DetailRequestScreen extends StatelessWidget {
                         },
                         child: const Text(
                           "CALL VIDEO",
+                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                        ),
+                      )
+                    : const Text(""),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: request.status == "Chờ thanh toán"
+                    ? FlatButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentScreen(
+                                  req: id, txtPrice: request.price),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "THANH TOÁN",
                           style: TextStyle(color: Colors.blue, fontSize: 16),
                         ),
                       )

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/firebase_database/database.dart';
-
 import 'package:it_support/screens/components/bottom_nav_bar.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -25,6 +24,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.initState();
     payment();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold();
@@ -38,8 +38,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         paypalRequest: BraintreePayPalRequest(
             amount: widget.txtPrice, displayName: 'haoDng'),
         cardEnabled: true);
-    BraintreeDropInResult? result =
-        await BraintreeDropIn.start(request);
+    BraintreeDropInResult? result = await BraintreeDropIn.start(request);
     if (result != null) {
       print(result.paymentMethodNonce.description);
       print(result.paymentMethodNonce.nonce);
@@ -47,12 +46,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
       displayToastMessage("Thanh toán thành công", context);
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => BottomNavBar()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BottomNavBar()));
     } else {
       displayToastMessage("Thanh toán không thành công", context);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => BottomNavBar()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BottomNavBar()));
     }
   }
 }

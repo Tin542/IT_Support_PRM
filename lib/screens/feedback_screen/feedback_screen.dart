@@ -80,9 +80,6 @@ class _FeedbackState extends State<FeedbackScreen> {
                     ),
                     FlatButton(
                       onPressed: () {
-                        // print("id: " + widget.id!);
-                        // print("text: " + FeddbackTextEditingController.text);
-                        // print("star: " + star);
                         reqRef.child(widget.id!).update({
                           'rating': star,
                           'feedback': FeddbackTextEditingController.text,

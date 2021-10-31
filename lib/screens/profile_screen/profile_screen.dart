@@ -221,10 +221,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   MaterialPageRoute(
                                       builder: (context) => donescreen()));
                             }),
-                        // textfield(
-                        //   hintText: 'Hỗ trợ',
-                        //   icon: Icons.contact_support_outlined,
-                        // ),
                         textfield(
                           hintText: 'Đăng Xuất',
                           icon: Icons.logout,

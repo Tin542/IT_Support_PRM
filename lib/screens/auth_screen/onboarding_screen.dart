@@ -59,19 +59,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                // Container(
-                //   alignment: Alignment.centerRight,
-                //   child: FlatButton(
-                //     onPressed: () => print(''),
-                //     child: Text(
-                //       'Tiếp theo',
-                //       style: TextStyle(
-                //         color: Colors.white,
-                //         fontSize: 20.0,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Container(
                   height: 600.0,
                   child: PageView(
@@ -173,37 +160,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 _currentPage != _numPages - 1
                     ? Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: FlatButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Tiếp theo',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
+                        child: Align(
+                          alignment: FractionalOffset.bottomRight,
+                          child: FlatButton(
+                            onPressed: () {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease,
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  'Tiếp theo',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22.0,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 10.0),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                        ),
+                      )
                     : Text(''),
               ],
             ),
@@ -212,29 +199,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 100.0,
-        width: double.infinity,
-        color: Colors.white,
-        child: GestureDetector(
-          onTap: () => {Get.to(() => LoginScreen(),
-              transition: Transition.rightToLeftWithFade,
-              duration: Duration(milliseconds: 600))
-          },
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 15.0),
-              child: Text(
-                'Bắt đầu',
-                style: TextStyle(
-                  color: Color(0xFF5B16D0),
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
+              height: 100.0,
+              width: double.infinity,
+              color: Colors.white,
+              child: GestureDetector(
+                onTap: () => {
+                  Get.to(() => LoginScreen(),
+                      transition: Transition.rightToLeftWithFade,
+                      duration: Duration(milliseconds: 600))
+                },
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 15.0),
+                    child: Text(
+                      'Bắt đầu',
+                      style: TextStyle(
+                        color: Color(0xFF5B16D0),
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-      )
+            )
           : Text(''),
     );
   }

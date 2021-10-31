@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:it_support/models/chatbot.dart';
 import 'package:it_support/models/message.dart';
 
-
 class ChatBotController extends GetxController {
   RxInt indexQuestion = 0.obs;
   var listMessage = [].obs;
@@ -52,7 +51,7 @@ class ChatBotController extends GetxController {
 
   void nextQuestion() {
     new Future.delayed(const Duration(seconds: 2),
-            () => {if (indexQuestion < listChatbot.length - 1) indexQuestion++});
+        () => {if (indexQuestion < listChatbot.length - 1) indexQuestion++});
     if (indexQuestion.value == listChatbot.length - 1) {
       Future.delayed(const Duration(seconds: 2));
     }
@@ -78,8 +77,7 @@ class ChatBotController extends GetxController {
 
   RxBool startBubble = false.obs;
   bubbleAppear() {
-    new Future.delayed(const Duration(seconds: 2), () => startBubble.value = true);
+    new Future.delayed(
+        const Duration(seconds: 2), () => startBubble.value = true);
   }
-
-
 }

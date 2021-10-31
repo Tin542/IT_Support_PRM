@@ -4,8 +4,6 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/models/request.dart';
-import 'package:it_support/screens/feedback_screen/feedback_screen.dart';
-import 'package:it_support/screens/payment_screen/payment_screen.dart';
 import 'package:it_support/screens/request_screen/it_request_detail_screen.dart';
 
 class donescreen extends StatefulWidget {

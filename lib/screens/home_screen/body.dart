@@ -123,11 +123,6 @@ class _BodyState extends State<Body> {
                     hintText: "Pass teamView (nếu có)",
                     onChanged: (value) {},
                   ),
-                  // RoundedInputField(
-                  //     hintText: "Explan your problem by picture...",
-                  //     onChanged: (value) {},
-                  //     icon: Icons.drive_folder_upload),
-
                   FlatButton(
                     onPressed: () {
                       if (deviceTextEditingController.text.isEmpty) {
@@ -151,7 +146,7 @@ class _BodyState extends State<Body> {
                           'pass_TeamView': passTVTextEditingController.text,
                           'status': 'Đang chờ xử lí',
                           'user_email': displayEmail,
-                          'it_email' : '',
+                          'it_email': '',
                           'rating': '',
                           'feedback': '',
                           'price': '',

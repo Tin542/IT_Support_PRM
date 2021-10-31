@@ -4,7 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  final TextEditingController emailTextEditingController = TextEditingController();
+  final TextEditingController emailTextEditingController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +52,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       if (!emailTextEditingController.text.contains("@")) {
                         displayToastMessage("Email không hợp lệ", context);
                       } else if (emailTextEditingController.text.isEmpty) {
-                        displayToastMessage(
-                            "Vui lòng nhập email.", context);
+                        displayToastMessage("Vui lòng nhập email.", context);
                       } else {
                         resetPassWord(context);
                       }
@@ -71,14 +71,14 @@ class ForgotPasswordScreen extends StatelessWidget {
     );
   }
 
-  final FirebaseAuth _firebaseAuth =
-      FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   void resetPassWord(BuildContext context) async {
-    _firebaseAuth.sendPasswordResetEmail(email: emailTextEditingController.text);
+    _firebaseAuth.sendPasswordResetEmail(
+        email: emailTextEditingController.text);
     displayToastMessage("Mail để lấy lại mật khẩu đã được gửi.", context);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   displayToastMessage(String message, BuildContext context) {

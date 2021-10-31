@@ -3,8 +3,6 @@ import 'package:it_support/models/request.dart';
 import 'package:it_support/screens/call_screen/videocall_screen.dart';
 import 'package:it_support/screens/payment_screen/payment_screen.dart';
 
-import '../../constant.dart';
-
 class DetailRequestScreen extends StatelessWidget {
   final String? id;
   final Request request;
@@ -38,22 +36,22 @@ class DetailRequestScreen extends StatelessWidget {
                   ),
                   initialValue: request.device),
               const SizedBox(height: 30),
-              // TextFormField(
-              //     readOnly: true,
-              //     decoration: const InputDecoration(
-              //       border: OutlineInputBorder(),
-              //       labelText: "ID teamView",
-              //     ),
-              //     initialValue: request.idTeamView),
-              // SizedBox(height: 30),
-              // TextFormField(
-              //     readOnly: true,
-              //     decoration: const InputDecoration(
-              //       border: OutlineInputBorder(),
-              //       labelText: "Password teamView",
-              //     ),
-              //     initialValue: request.passTeamView),
-              // SizedBox(height: 30),
+              TextFormField(
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "ID teamView",
+                  ),
+                  initialValue: request.idTeamView),
+              SizedBox(height: 30),
+              TextFormField(
+                  readOnly: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Password teamView",
+                  ),
+                  initialValue: request.passTeamView),
+              SizedBox(height: 30),
               TextFormField(
                 readOnly: true,
                 decoration: const InputDecoration(

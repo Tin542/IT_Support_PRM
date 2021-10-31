@@ -10,9 +10,8 @@ class CategoryNews extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
-        title: Text("Tin Tức"),
-        backgroundColor: kBlueColor
-      ),
+          title: Text("Tin Tức"),
+          backgroundColor: kBlueColor),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -75,7 +74,6 @@ class CategoryNews extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-
                 InkWell(
                   onTap: () async {
                     final url =
@@ -127,7 +125,6 @@ class CategoryNews extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-
                 InkWell(
                   onTap: () async {
                     final url =
@@ -179,7 +176,6 @@ class CategoryNews extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-
                 InkWell(
                   onTap: () async {
                     final url =
@@ -231,7 +227,6 @@ class CategoryNews extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-
                 InkWell(
                   onTap: () async {
                     final url =

@@ -28,30 +28,10 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController phoneTextNameController = TextEditingController();
   TextEditingController dobTextEditingController = TextEditingController();
 
-
-  TextEditingController textFirstNameController = TextEditingController();
-  TextEditingController textLastNameController = TextEditingController();
-  TextEditingController textPhoneController = TextEditingController();
-  TextEditingController textEmailController = TextEditingController();
-  TextEditingController textStreetAddressController = TextEditingController();
-  TextEditingController textLocalityController = TextEditingController();
-  TextEditingController textCityController = TextEditingController();
-  TextEditingController textPostalCodeController = TextEditingController();
-  TextEditingController textHeightController = TextEditingController();
-  TextEditingController textWeightController = TextEditingController();
-  TextEditingController textAllergyController = TextEditingController();
-  TextEditingController textBloodGroupController = TextEditingController();
-  TextEditingController textBackgroundDiseaseController = TextEditingController();
-
-  var selectedGender;
-
   @override
   void initState() {
     super.initState();
     getProfileuser();
-    setState(() {
-      selectedGender = displayGender;
-    });
   }
 
   late DateTime dob = DateTime.now();
@@ -343,12 +323,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  setSelectedGender(var value) {
-    setState(() {
-      selectedGender = value;
-    });
-  }
-
   Widget _gender(String title) {
     return InkWell(
       child: Container(
@@ -376,17 +350,18 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   void updateProfile() async {
-
     usersRef.child(user!.uid).update({
-      'name' : nameTextNameController.text.trim(),
-      'phone' : phoneTextNameController.text.trim(),
+      'name': nameTextNameController.text.trim(),
+      'phone': phoneTextNameController.text.trim(),
       "gender": _choosegender,
-      'dob' : dobTextEditingController.text.trim(),
+      'dob': dobTextEditingController.text.trim(),
     });
 
     displayToastMessage("Tài khoản của bạn đã cập nhập", context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ProfileScreen()));
   }
+
   void getProfileuser() {
     usersRef.child(user!.uid).onValue.listen((event) {
       final data = new Map<String, dynamic>.from(event.snapshot.value);
@@ -410,8 +385,7 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  displayToastMessage(String message, BuildContext context){
-    Fluttertoast.showToast(msg:message);
+  displayToastMessage(String message, BuildContext context) {
+    Fluttertoast.showToast(msg: message);
   }
-
 }

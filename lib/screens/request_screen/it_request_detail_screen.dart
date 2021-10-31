@@ -82,13 +82,15 @@ class DetailRequestScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: request.status == "đang xử lí"
+                child: request.status == "Đang xử lí"
                     ? FlatButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CallScreen()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CallScreen(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "CALL VIDEO",

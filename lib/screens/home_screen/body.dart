@@ -149,17 +149,14 @@ class _BodyState extends State<Body> {
                           'description': descriptionTextEditingController.text,
                           'id_teamView': idTVTextEditingController.text,
                           'pass_TeamView': passTVTextEditingController.text,
-                          'status': 'đang chờ xử lí',
+                          'status': 'Đang chờ xử lí',
                           'user_email': displayEmail,
                           'rating': '',
                           'feedback': '',
+                          'price': '',
                         });
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    goToListRequest(context)));
+                        displayToastMessage("Yếu cầu đã gửi", context);
                       }
                     },
                     child: const Text(

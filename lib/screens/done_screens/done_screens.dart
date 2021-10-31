@@ -43,7 +43,7 @@ class _listrequestState extends State<donescreen> {
           ? Container(
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.all(10),
-              height: 150,
+              height: 169,
               color: Colors.white,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +96,7 @@ class _listrequestState extends State<donescreen> {
                   Row(
                     children: [
                       Icon(
-                        Icons.description_outlined,
+                        Icons.support_agent,
                         color: Colors.purple,
                         size: 20,
                       ),
@@ -104,7 +104,7 @@ class _listrequestState extends State<donescreen> {
                         width: 6,
                       ),
                       Text(
-                        request['user_email'],
+                        request['it_email'],
                         style: TextStyle(
                             fontSize: 16,
                             color: Colors.purple,
@@ -127,6 +127,23 @@ class _listrequestState extends State<donescreen> {
                       ),
                       Text(request['price'],
                           style: TextStyle(color: Colors.yellow[900])),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star,
+                        color: Colors.yellow[500],
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(request['rating'],
+                          style: TextStyle(color: Colors.yellow[500])),
                     ],
                   ),
                   SizedBox(

@@ -151,6 +151,7 @@ class _BodyState extends State<Body> {
                           'pass_TeamView': passTVTextEditingController.text,
                           'status': 'Đang chờ xử lí',
                           'user_email': displayEmail,
+                          'it_email' : '',
                           'rating': '',
                           'feedback': '',
                           'price': '',

@@ -30,10 +30,11 @@ class _listrequestState extends State<RequestScreen> {
       onTap: () {
         final requestDetail = Request.fromRTDB(request);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    DetailRequestScreen(request: requestDetail)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailRequestScreen(request: requestDetail),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
@@ -189,6 +190,7 @@ class _listrequestState extends State<RequestScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PaymentScreen(
+                          req: id,
                           txtPrice: request['price'],
                         ),
                       ),

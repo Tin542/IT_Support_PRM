@@ -7,6 +7,7 @@ class Request {
   final String userEmail;
   final String status;
   final String category;
+  final String price;
   Request({
     required this.problem,
     required this.description,
@@ -16,6 +17,7 @@ class Request {
     required this.userEmail,
     required this.status,
     required this.category,
+    required this.price,
   });
 
   factory Request.fromRTDB(Map<dynamic, dynamic> data) {
@@ -28,6 +30,7 @@ class Request {
       userEmail: data['user_email'] ?? '',
       status: data['status'] ?? '',
       category: data['category'] ?? '',
+      price: data['price'] ?? '',
     );
   }
 }

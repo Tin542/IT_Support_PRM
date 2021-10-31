@@ -18,7 +18,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final screens = [
     HomeScreenCustomer(),
     RequestScreen(),
-    ListChatScreen(),
     CategoryNews(),
     ProfileScreen(),
   ];
@@ -44,10 +43,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.format_list_bulleted),
                 label: "Danh Sách IT",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.message),
-                label: "Tin Nhắn",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.feed),

@@ -5,7 +5,6 @@ import 'package:it_support/screens/auth_screen/login_screen.dart';
 import 'package:it_support/screens/auth_screen/onboarding_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: OnboardingScreen(),
     );
   }
 }

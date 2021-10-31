@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:it_support/constant.dart';
 import 'package:it_support/firebase_database/database.dart';
 import 'package:it_support/screens/auth_screen/login_screen.dart';
+import 'package:it_support/screens/done_screens/done_screens.dart';
 import 'package:it_support/screens/profile_screen/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -212,9 +213,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         textfield(
-                          hintText: 'Lịch sử',
-                          icon: Icons.history,
-                        ),
+                            hintText: 'Lịch sử',
+                            icon: Icons.history,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => donescreen()));
+                            }),
                         // textfield(
                         //   hintText: 'Hỗ trợ',
                         //   icon: Icons.contact_support_outlined,

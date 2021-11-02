@@ -245,7 +245,7 @@ class _EditProfileState extends State<EditProfile> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AnimatedTextFormField(
-                              width: 190,
+                              width: 150,
                               height: 48.0,
                               inputType: TextInputType.text,
                               hintText: displayDob,

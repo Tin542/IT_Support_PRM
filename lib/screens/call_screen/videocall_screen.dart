@@ -58,7 +58,7 @@ class _CallScreenState extends State<CallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tele Medicine Video Call'),
+        title: const Text('It Support Video call'),
         automaticallyImplyLeading: false,
       ),
       body: Stack(
